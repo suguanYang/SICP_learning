@@ -1,0 +1,22 @@
+(define average (lambda (a b) (/ (+ a b) 2)))
+
+(define (half-interval-method f a b)
+  (define (close-enough? x y) (< (abs (- x y)) 0.001))
+  (define (search f n p)
+    (let ((midpoint (average n p)))
+      (if (close-enough? n p)
+           midpoint
+           (let ((test-value (f midpoint)))
+             (cond ((positive? test-value)
+                    (search f n midpoint))
+                   ((negative? test-value)
+                    (search f midpoint p))
+                   (else midpoint))))))
+  (let ((a-value (f a))
+        (b-value (f b)))
+    (cond ((and (negative? a-value) (positive? b-value))
+            (search f a b))
+           ((and (positive? a-value) (negative? b-value))
+            (search f b a))
+           (else
+             (error "Value are not of opposite" a b)))))
