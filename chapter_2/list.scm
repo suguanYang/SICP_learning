@@ -3,7 +3,6 @@
         ((= n 0) (car items))
         (else (nth (cdr items) (- n 1)))))
 
-
 (define (len items)
   (if (null? items)
     0
@@ -15,3 +14,4 @@
       count
       (len-iter (cdr r-items) (+ 1 count))))
   (len-iter items 0))
+
